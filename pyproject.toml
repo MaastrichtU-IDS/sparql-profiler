@@ -85,13 +85,13 @@ fmt = [
     "isort src tests",
     "autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place src tests --exclude=__init__.py",
     "pre-commit run --all-files || true",
-    "black src tests",
+    # "black src tests",
 ]
 check = [
     "isort --check-only --diff src",
     "flake8 src",
     "mypy src",
-    "black src tests --check",
+    # "black src tests --check",
 ]
 all = [
     "format",
