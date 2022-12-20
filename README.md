@@ -108,7 +108,7 @@ hatch -v env create
 
 ### 🏗️ Run in development
 
-You can easily run the `sparql-profiler` in your terminal with hatch while in development:
+You can easily run the `sparql-profiler` in your terminal with hatch while in development to profile a specific SPARQL endpoint:
 
 ```bash
 hatch run sparql-profile profile https://graphdb.dumontierlab.com/repositories/umids-kg
