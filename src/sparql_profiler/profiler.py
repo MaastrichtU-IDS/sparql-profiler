@@ -43,8 +43,7 @@ PREFIX void-ext: <http://ldf.fi/void-ext#>\n"""
         log.info(f"🕸️  Computing metadata for graph {BOLD}{BLUE}{graph}{END}")
         for filename in os.listdir(pkg_resources.resource_filename('sparql_profiler', 'queries/' + metadata_type)):
             log.info(f"⏳️ Running query {BOLD}{YELLOW}{filename}{END} on graph {BOLD}{GREEN}{graph}{END}")
-            with open(
-                pkg_resources.resource_filename('sparql_profiler', 'queries/' + metadata_type + '/' + filename)) as f:
+            with open(pkg_resources.resource_filename('sparql_profiler', 'queries/' + metadata_type + '/' + filename)) as f:
                 sparql_query = f.read()
 
                 # Define variables to replace for the different metadata type here
