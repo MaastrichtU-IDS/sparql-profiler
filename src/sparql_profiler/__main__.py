@@ -4,8 +4,8 @@ import typer
 from rdflib import Graph
 
 from sparql_profiler import __version__
-from sparql_profiler.create_dataset import create_dataset_prompt
-from sparql_profiler.profiler import profile_sparql_endpoint
+from sparql_profiler.profiler import SparqlProfiler
+from sparql_profiler.questions import get_metadata_from_prompt
 from sparql_profiler.utils import log
 
 cli = typer.Typer()
@@ -16,16 +16,17 @@ def profile_endpoint(
     sparql_endpoint: str = typer.Argument(
         "https://graphdb.dumontierlab.com/repositories/umids-kg", help="SPARQL endpoint to profile"
     ),
-    graph: str = typer.Option(
+    focus_graph: str = typer.Option(
         None,
-        "--graph",
+        "--focus-graph",
         "-g",
         help="Compute metadata only for the specified graph in the triplestore (compute for all graphs by default)",
     ),
-    dataset_uri: str = typer.Option(None, help="URI of the dataset distribution to describe"),
-    profiler: str = typer.Option("hcls", help="Select the profiler to use: hcls or bio2rdf supported."),
-    create_dataset: bool = typer.Option(
+    profiler: str = typer.Option("optimized", help="Select the profiler to use among: optimized, hcls, bio2rdf."),
+    questions: bool = typer.Option(
         False,
+        "--questions",
+        "-q",
         help="Prompt questions to generate the dataset metadata and analyze the endpoint (default), or only analyze",
     ),
     output: str = typer.Option(
@@ -43,16 +44,16 @@ def profile_endpoint(
     log.addHandler(console_handler)
 
     g = Graph()
-    if create_dataset:
-        g, metadata_answers = create_dataset_prompt(sparql_endpoint, dataset_uri, g)
+    if questions:
+        g = get_metadata_from_prompt(sparql_endpoint, g)
 
-    g = profile_sparql_endpoint(sparql_endpoint, dataset_uri, profiler, graph, g)
+    sp = SparqlProfiler(sparql_endpoint, profiler, focus_graph, g)
 
     if output:
-        g.serialize(destination=output, format='turtle')
-        print(f"Metadata stored to {output} 📝")
+        sp.metadata.serialize(destination=output, format='turtle')
+        log.info(f"Metadata stored to {output} 📝")
     else:
-        print(g.serialize(format='turtle'))
+        log.info(sp.metadata.serialize(format='turtle'))
 
 
 @cli.command("version")

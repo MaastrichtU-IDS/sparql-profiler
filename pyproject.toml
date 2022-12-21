@@ -10,6 +10,7 @@ readme = "README.md"
 license = { file = "LICENSE.txt" }
 authors = [
     { name = "Vincent Emonet", email = "vincent.emonet@gmail.com" },
+    { name = "Maryam Mohammadi", email = "maryam.mohammadi@maastrichtuniversity.nl" },
 ]
 maintainers = [
     { name = "Vincent Emonet", email = "vincent.emonet@gmail.com" },

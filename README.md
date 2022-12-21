@@ -1,6 +1,6 @@
 <div align="center">
 
-# SPARQL endpoint profiler
+# ✨ SPARQL endpoint profiler
 
 [![PyPI - Version](https://img.shields.io/pypi/v/sparql-profiler.svg?logo=pypi&label=PyPI&logoColor=silver)](https://pypi.org/project/sparql-profiler/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sparql-profiler.svg?logo=python&label=Python&logoColor=silver)](https://pypi.org/project/sparql-profiler/)
@@ -28,35 +28,41 @@ pip install sparql-profiler
 
 ### ⌨️ Use as a command-line interface
 
-You can easily use your package from your terminal after installing `sparql-profiler` with pip:
+You can easily use the `sparql-profiler` from your terminal after installing  with pip.
 
-```bash
-sparql-profiler
-```
+#### Run profiling
 
-Get a full rundown of the available options with:
-
-```bash
-sparql-profiler --help
-```
-
-Profile a SPARQL endpoint to generate [HCLS descriptive metadata](https://www.w3.org/TR/hcls-dataset/) for each graph:
+Quickly profile a small SPARQL endpoint to generate [HCLS descriptive metadata](https://www.w3.org/TR/hcls-dataset/) for each graph:
 
 ```bash
 sparql-profiler profile https://graphdb.dumontierlab.com/repositories/umids-kg
 ```
 
-Profile a SPARQL endpoint to generate metadata specific to Bio2RDF for each graph:
+Profiling a bigger SPARQL endpoint will take more times:
 
 ```bash
-d2s metadata analyze https://bio2rdf.137.120.31.102.nip.io/sparql -m bio2rdf
+sparql-profiler profile https://bio2rdf.org/sparql
 ```
 
-You can also add additional metadata for the dataset distribution by answering questions about it (description, license, etc) after running this command:
+Display more debugging logs with `-l debug`:
 
 ```bash
-sparql-profiler profile https://graphdb.dumontierlab.com/repositories/umids-kg --create-dataset
+sparql-profiler profile https://bio2rdf.org/sparql -l debug
 ```
+
+Profile a SPARQL endpoint to run a profiling method specific to Bio2RDF:
+
+```bash
+sparql-profiler profile https://bio2rdf.org/sparql --profiler bio2rdf
+```
+
+You can also add additional metadata for the dataset distribution after answering questions about it (description, license, etc) by running this command:
+
+```bash
+sparql-profiler profile https://graphdb.dumontierlab.com/repositories/umids-kg -q
+```
+
+#### Help
 
 See all options for the `profile` command with:
 
@@ -64,19 +70,21 @@ See all options for the `profile` command with:
 sparql-profiler profile --help
 ```
 
+Get a full rundown of all available commands with:
+
+```bash
+sparql-profiler --help
+```
+
 ### 🐍 Use with python
 
- Use this package in python scripts:
+ Use the `sparql-profiler` in python scripts:
 
  ```python
-from sparql_profiler import profile_sparql_endpoint
+from sparql_profiler import SparqlProfiler
 
-g = profile_sparql_endpoint(
-    sparql_endpoint="https://graphdb.dumontierlab.com/repositories/umids-kg",
-    profiler="hcls",
-)
-print(g.serialize(format="turtle"))
-# TODO: add example to use your package
+sp = SparqlProfiler("https://graphdb.dumontierlab.com/repositories/umids-kg")
+print(sp.metadata.serialize(format="turtle"))
  ```
 
 ## 🧑‍💻 Development setup
@@ -106,12 +114,18 @@ Install the dependencies in a local virtual environment:
 hatch -v env create
 ```
 
+Alternatively, if you are already handling the virtual environment yourself or installing in a docker container you can use:
+
+```bash
+pip install -e ".[test,dev]"
+```
+
 ### 🏗️ Run in development
 
 You can easily run the `sparql-profiler` in your terminal with hatch while in development to profile a specific SPARQL endpoint:
 
 ```bash
-hatch run sparql-profile profile https://graphdb.dumontierlab.com/repositories/umids-kg
+hatch run sparql-profiler profile https://graphdb.dumontierlab.com/repositories/umids-kg
 ```
 
 ### ☑️ Run tests

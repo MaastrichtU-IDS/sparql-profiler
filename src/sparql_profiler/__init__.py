@@ -2,4 +2,4 @@
 
 __version__ = "0.0.1"
 
-from .profiler import profile_sparql_endpoint
+from .profiler import SparqlProfiler

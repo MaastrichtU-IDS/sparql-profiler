@@ -1,10 +1,16 @@
-from sparql_profiler import __version__, profile_sparql_endpoint
+from sparql_profiler import SparqlProfiler, __version__
 
 
-def test_generate_metadata():
+def test_profiler_optimized():
     sparql_endpoint_url = 'https://graphdb.dumontierlab.com/repositories/umids-kg'
-    output_metadata = profile_sparql_endpoint(sparql_endpoint_url, sparql_endpoint_url, 'hcls', None)
-    assert len(output_metadata) > 10
+    sp = SparqlProfiler(sparql_endpoint_url)
+    assert len(sp.metadata) > 8
+
+
+def test_profiler_hcls():
+    sparql_endpoint_url = 'https://graphdb.dumontierlab.com/repositories/umids-kg'
+    sp = SparqlProfiler(sparql_endpoint_url, 'hcls')
+    assert len(sp.metadata) > 10
 
 
 def test_version():
