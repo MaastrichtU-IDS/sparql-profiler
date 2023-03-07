@@ -87,6 +87,8 @@ class SparqlProfiler:
             graph_start = ""
             graph_end = ""
             graph = self.endpoint_url
+
+        # NOTE: we need to escape curly brackets {} in the query by doubling them
         query = f"""{query_prefixes}
 CONSTRUCT {{
   <{graph}> a void:Dataset ;

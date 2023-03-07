@@ -95,6 +95,7 @@ def add_prompt_to_graph(answers: Dict[str, str], endpoint_url: str, g: Graph = G
         g.add((publisher_uri, FOAF['page'], publisher_uri))
         g.add((endpoint_uri, DCTERMS.publisher, publisher_uri))
 
+    # Add infos about the SPARQL distribution
     g.add((endpoint_uri, RDF.type, DCAT['Distribution']))
     g.add((endpoint_uri, RDF.type, VOID.Dataset))
     g.add((endpoint_uri, DCAT['accessURL'], endpoint_uri))
