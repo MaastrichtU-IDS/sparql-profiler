@@ -173,3 +173,22 @@ The deployment of new releases is done automatically by a GitHub Action workflow
 3. Create a new release on GitHub, which will automatically trigger the publish workflow, and publish the new release to PyPI.
 
 You can also manually trigger the workflow from the Actions tab in your GitHub repository webpage.
+
+
+### Notes
+
+SPARQL profiler of the Yumaka viewer (https://umaka-viewer.dbcls.jp/, code in https://github.com/dbcls/umakaparser) written in Java which should be able to work with large graphs: https://bitbucket.org/yayamamo/tripledataprofiler/src/master/src/jp/ac/rois/dbcls/TripleDataProfiler.java
+
+Run:
+
+```bash
+java -jar TripleDataProfiler.jar -ep https://bio2rdf.org/sparql
+```
+
+Build:
+
+```bash
+javac -cp commons-cli-1.2.jar:commons-lang3-3.3.2.jar:apache-jena-2.11.1/lib/*:./src ./src/jp/ac/rois/dbcls/TripleDataProfiler.java
+```
+
+> The guy is expecting we figure out by ourselves where to get his shit** deprecated versions of jena. Can't use basic maven in 2021, I am so tired about this kind of work done in research. There is no respect whatsoever by anyone for their own work.
